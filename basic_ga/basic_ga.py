@@ -19,12 +19,12 @@ def j_d_schaffer(x1, x2):
 
 
 def binary2decimal(binary):
-    '''二进制转十进制'''
+    """二进制转十进制"""
     return MIN + (int(binary, 2) * (MAX - MIN)) / (2 ** len(binary) - 1)
 
 
 def decode(gene):
-    '''将基因片段转化成实数，基因构成为[x1:x2]'''
+    """将基因片段转化成实数，基因构成为[x1:x2]"""
     x_length = int(GENE_LENGTH / 2)
     x1_gene = gene[:x_length]
     x2_gene = gene[x_length:]
@@ -34,13 +34,13 @@ def decode(gene):
 
 
 def calculate_fitness(gene):
-    '''计算适应性评分，即目标函数值'''
+    """计算适应性评分，即目标函数值"""
     x1, x2 = decode(gene)
     return j_d_schaffer(x1, x2)
 
 
 def init_population():
-    '''初始化种群'''
+    """初始化种群"""
     population = []
     for p in range(POPULATION_SIZE):
         tmp = ''
@@ -65,7 +65,7 @@ def find_best_gene(population):
 
 def crossover(population):
     for idx, individual in enumerate(population):
-        if (random.random() < PC):
+        if random.random() < PC:
             rand_spouse = random.randint(0, len(population) - 1)
             rand_point = random.randint(0, len(individual) - 1)
 
@@ -80,7 +80,7 @@ def crossover(population):
 def mutation(population):
     new_population = []
     for individual in population:
-        if (random.random() < PM):
+        if random.random() < PM:
             rand_ = random.randint(0, len(individual) - 1)
             if individual[rand_] == '0':
                 individual = individual[:rand_] + '1' + individual[rand_ + 1:]
@@ -90,31 +90,31 @@ def mutation(population):
     return new_population
 
 
-def binary_search(list, item):
-    '''假装是二分查找'''
-    if item <= list[0]:
+def binary_search(search_list, item):
+    """假装是二分查找"""
+    if item <= search_list[0]:
         return 0
-    for idx in range(len(list) - 1):
-        if list[idx] < item and list[idx + 1] >= item:
+    for idx in range(len(search_list) - 1):
+        if search_list[idx] < item <= search_list[idx + 1]:
             return idx + 1
 
 
 def selection(population, total_fitness):
-    '''旋轮法选择'''
+    """旋轮法选择"""
     p_value = []
     new_population = []
     for individual in population:
         fitness = calculate_fitness(individual)
         p_value.append(fitness / total_fitness)
     cdf = cumulative_distribution_function(p_value)
-    for iter in range(POPULATION_SIZE):
+    for _iter in range(POPULATION_SIZE):
         probability = random.random()
         new_population.append(population[binary_search(cdf, probability)])
     return new_population
 
 
 def cumulative_distribution_function(p_value):
-    '''cumulative_Distribution_Function'''
+    """cumulative_Distribution_Function"""
     cdf = []
     for idx in range(len(p_value)):
         cdf.append(sum(p_value[:idx + 1]))
@@ -126,8 +126,9 @@ def main():
     population = init_population()
     best_gene = '0' * GENE_LENGTH
     best_gene_history = '0' * GENE_LENGTH
-    for iter in range(NG):
-        print('迭代次数:{}, 本轮最优值:{}'.format(iter, calculate_fitness(best_gene)))
+    _iter = 0
+    for _iter in range(NG):
+        print('迭代次数:{}, 本轮最优值:{}'.format(_iter, calculate_fitness(best_gene)))
         # 计算适值函数
         best_gene, total_fitness = find_best_gene(population)
         # 选择
@@ -139,7 +140,7 @@ def main():
         if calculate_fitness(best_gene) > calculate_fitness(best_gene_history):
             best_gene_history = best_gene
 
-    print('迭代次数:{}'.format(iter))
+    print('迭代次数:{}'.format(_iter))
     print("计算结果: {}".format(calculate_fitness(best_gene_history)))
     print("基因片段: {}".format(best_gene_history))
     print("x1={}, x2={}".format(decode(best_gene_history)[0], decode(best_gene_history)[1]))
