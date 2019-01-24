@@ -11,8 +11,8 @@ from basic_mlp.solve_net import train_net, test_net
 MAX = 1024
 MIN = 1
 GENE_LENGTH = 47
-POPULATION_SIZE = 1000
-NG = 1
+POPULATION_SIZE = 10
+NG = 10
 PC = 0.9
 PM = 0.02
 
@@ -31,14 +31,32 @@ def active_function(flag, idx):
 
 def loss_function(flag):
     if flag == '1':
-        return EuclideanLoss(name='loss')
+        return EuclideanLoss(name='EuclideanLoss')
     else:
-        return SoftmaxCrossEntropyLoss(name='loss')
+        return SoftmaxCrossEntropyLoss(name='SoftmaxCrossEntropyLoss')
 
 
 def print_neural_architecture(gene):
     number_of_layer = int(gene[:2], 2)
-    print(number_of_layer)
+    print("gene: {}".format(gene))
+    fc = []
+    ac = []
+
+    for idx, i in enumerate(range(3, 7)):
+        ac.append(active_function(gene[i], idx + 1))
+
+    for i in range(7, 47, 10):
+        fc.append(binary2decimal(gene[i:i + 10]))
+
+    print("fc0: 784, {}".format(fc[0]))
+    print(ac[0])
+
+    for i in range(number_of_layer):
+        print("fc{}: {}, {}".format(i + 1, fc[i], fc[i + 1]))
+        print("ac{}: {}".format(i + 1, ac[i + 1]))
+
+    print("fc_end: {}, 10".format(fc[number_of_layer]))
+    print(loss_function(gene[2]))
 
 
 def decode(gene):
@@ -60,6 +78,7 @@ def decode(gene):
 
     for i in range(number_of_layer):
         model.add(Linear('fc{}'.format(i + 1), fc[i], fc[i + 1], 0.01))
+        model.add(ac[i + 1])
 
     model.add(Linear('fc_end', fc[number_of_layer], 10, 0.01))
     model.loss = loss_function(gene[2])
@@ -68,6 +87,8 @@ def decode(gene):
 
 
 def calculate_fitness(gene):
+    print_neural_architecture(gene)
+
     model = decode(gene)
 
     config = {
@@ -75,7 +96,7 @@ def calculate_fitness(gene):
         'weight_decay': 1e-4,
         'momentum': 1e-4,
         'batch_size': 100,
-        'max_epoch': 5,
+        'max_epoch': 1,
         'disp_freq': 100,
         'test_epoch': 1
     }
