@@ -3,8 +3,6 @@ import random
 
 import numpy as np
 
-# from objective_function import j_d_schaffer
-
 MAX = 100
 MIN = -100
 GENE_LENGTH = 40
