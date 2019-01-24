@@ -11,7 +11,7 @@ from basic_mlp.solve_net import train_net, test_net
 MAX = 1024
 MIN = 1
 GENE_LENGTH = 47
-POPULATION_SIZE = 10
+POPULATION_SIZE = 100
 NG = 10
 PC = 0.9
 PM = 0.02
