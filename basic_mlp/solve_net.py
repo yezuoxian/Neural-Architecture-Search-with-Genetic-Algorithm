@@ -43,7 +43,7 @@ def train_net(model, loss, config, inputs, labels, batch_size, disp_freq):
                 iter_counter, np.mean(loss_list), np.mean(acc_list))
             loss_list = []
             acc_list = []
-            # LOG_INFO(msg)
+            LOG_INFO(msg)
 
 
 def test_net(model, loss, inputs, labels, batch_size):
@@ -59,5 +59,5 @@ def test_net(model, loss, inputs, labels, batch_size):
         acc_list.append(acc_value)
 
     msg = '    Testing, total mean loss %.5f, total acc %.5f' % (np.mean(loss_list), np.mean(acc_list))
-    # LOG_INFO(msg)
+    LOG_INFO(msg)
     return np.mean(loss_list), np.mean(acc_list)

@@ -7,6 +7,9 @@ class EuclideanLoss(object):
     def __init__(self, name):
         self.name = name
 
+    def __str__(self):
+        return self.name
+
     def forward(self, input, target):
         return 0.5 * np.sum((target - input) ** 2) / len(input)
 
@@ -17,6 +20,9 @@ class EuclideanLoss(object):
 class SoftmaxCrossEntropyLoss(object):
     def __init__(self, name):
         self.name = name
+
+    def __str__(self):
+        return self.name
 
     def forward(self, input, target):
         self.prob = (np.exp(input).T / np.exp(input).sum(axis=1)).T

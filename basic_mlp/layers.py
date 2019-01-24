@@ -7,6 +7,9 @@ class Layer(object):
         self.trainable = trainable
         self._saved_tensor = None
 
+    def __str__(self):
+        return self.name
+
     def forward(self, input):
         pass
 
