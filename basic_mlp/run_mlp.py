@@ -18,7 +18,8 @@ if __name__ == '__main__':
     model.add(Relu('relu2'))
     model.add(Linear('fc3', 200, 10, 0.01))
 
-    loss = EuclideanLoss(name='loss')
+    model.loss = EuclideanLoss(name='loss')
+
 
     # Training configuration
     # You should adjust these hyperparameters
@@ -38,8 +39,8 @@ if __name__ == '__main__':
 
     for epoch in range(config['max_epoch']):
         LOG_INFO('Training @ %d epoch...' % (epoch))
-        train_net(model, loss, config, train_data, train_label, config['batch_size'], config['disp_freq'])
+        train_net(model, model.loss, config, train_data, train_label, config['batch_size'], config['disp_freq'])
 
         if epoch % config['test_epoch'] == 0:
             LOG_INFO('Testing @ %d epoch...' % (epoch))
-            test_net(model, loss, test_data, test_label, config['batch_size'])
+            test_net(model, model.loss, test_data, test_label, config['batch_size'])

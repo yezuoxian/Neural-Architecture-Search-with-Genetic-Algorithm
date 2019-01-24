@@ -3,6 +3,7 @@ class Network(object):
         self.layer_list = []
         self.params = []
         self.num_layers = 0
+        self.loss = None
 
     def add(self, layer):
         self.layer_list.append(layer)
