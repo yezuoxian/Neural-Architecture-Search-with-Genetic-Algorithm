@@ -8,7 +8,7 @@ from utils import LOG_INFO
 if __name__ == '__main__':
     train_data, test_data, train_label, test_label = load_mnist_2d('../data')
 
-    # Your model defintion here
+    # Your model definition here
     # You should explore different model architecture
     model = Network()
 
@@ -19,7 +19,6 @@ if __name__ == '__main__':
     model.add(Linear('fc3', 200, 10, 0.01))
 
     model.loss = EuclideanLoss(name='loss')
-
 
     # Training configuration
     # You should adjust these hyperparameters
@@ -38,9 +37,9 @@ if __name__ == '__main__':
     }
 
     for epoch in range(config['max_epoch']):
-        LOG_INFO('Training @ %d epoch...' % (epoch))
+        LOG_INFO('Training @ %d epoch...' % epoch)
         train_net(model, model.loss, config, train_data, train_label, config['batch_size'], config['disp_freq'])
 
         if epoch % config['test_epoch'] == 0:
-            LOG_INFO('Testing @ %d epoch...' % (epoch))
+            LOG_INFO('Testing @ %d epoch...' % epoch)
             test_net(model, model.loss, test_data, test_label, config['batch_size'])
