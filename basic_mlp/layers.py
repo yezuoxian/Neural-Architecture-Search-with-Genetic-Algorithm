@@ -17,9 +17,8 @@ class Layer(object):
         pass
 
     def _saved_for_backward(self, tensor):
-        '''The intermediate results computed during forward stage
-        can be saved and reused for backward, for saving computation'''
-
+        """The intermediate results computed during forward stage
+        can be saved and reused for backward, for saving computation"""
         self._saved_tensor = tensor
 
 
@@ -28,12 +27,10 @@ class Relu(Layer):
         super(Relu, self).__init__(name)
 
     def forward(self, input):
-        '''Your codes here'''
         self._saved_for_backward(input)
         return np.maximum(input, 0)
 
     def backward(self, grad_output):
-        '''Your codes here'''
         return grad_output * np.array(self._saved_tensor > 0, dtype=float)
 
 
@@ -42,12 +39,10 @@ class Sigmoid(Layer):
         super(Sigmoid, self).__init__(name)
 
     def forward(self, input):
-        '''Your codes here'''
         self._saved_for_backward(1 / (1 + np.exp(-input)))
         return self._saved_tensor
 
     def backward(self, grad_output):
-        '''Your codes here'''
         return grad_output * self._saved_tensor * (1 - self._saved_tensor)
 
 
@@ -66,12 +61,10 @@ class Linear(Layer):
         self.diff_b = np.zeros(out_num)
 
     def forward(self, input):
-        '''Your codes here'''
         self._saved_for_backward(input)
         return np.dot(input, self.W) + self.b
 
     def backward(self, grad_output):
-        '''Your codes here'''
         self.grad_W = np.dot(self._saved_tensor.T, grad_output)
         self.grad_b = grad_output
         return np.dot(grad_output, self.W.T)
