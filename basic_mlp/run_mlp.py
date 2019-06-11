@@ -10,14 +10,24 @@ if __name__ == '__main__':
 
     # Your model definition here
     # You should explore different model architecture
+    # model = Network()
+    # model.add(Linear('fc1', 784, 993, 0.01))
+    # model.add(Relu('relu1'))
+    # model.add(Linear('fc2', 993, 671, 0.01))
+    # model.add(Relu('relu2'))
+    # model.add(Linear('fc3', 671, 10, 0.01))
+    # model.loss = SoftmaxCrossEntropyLoss(name='loss')
+
+    # model = Network()
+    # model.add(Linear('fc1', 784, 815, 0.01))
+    # model.add(Relu('relu1'))
+    # model.add(Linear('fc3', 815, 10, 0.01))
+    # model.loss = EuclideanLoss(name='loss')
+
     model = Network()
-
-    model.add(Linear('fc1', 784, 400, 0.01))
+    model.add(Linear('fc1', 784, 783, 0.01))
     model.add(Relu('relu1'))
-    model.add(Linear('fc2', 400, 200, 0.01))
-    model.add(Relu('relu2'))
-    model.add(Linear('fc3', 200, 10, 0.01))
-
+    model.add(Linear('fc3', 783, 10, 0.01))
     model.loss = EuclideanLoss(name='loss')
 
     # Training configuration

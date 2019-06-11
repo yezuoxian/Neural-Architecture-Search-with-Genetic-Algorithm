@@ -7,11 +7,12 @@ from basic_mlp.load_data import load_mnist_2d
 from basic_mlp.loss import EuclideanLoss, SoftmaxCrossEntropyLoss
 from basic_mlp.network import Network
 from basic_mlp.solve_net import train_net, test_net
+from basic_mlp.utils import LOG_INFO
 
 MAX = 1024
 MIN = 1
 GENE_LENGTH = 47
-POPULATION_SIZE = 100
+POPULATION_SIZE = 10
 NG = 10
 PC = 0.9
 PM = 0.02
@@ -201,7 +202,7 @@ def main():
     best_gene_history = '0' * GENE_LENGTH
     _iter = 0
     for _iter in range(NG):
-        print('迭代次数:{}, 本轮最优值:{}, 最优基因代码:{}'.format(_iter, calculate_fitness(best_gene), best_gene))
+        LOG_INFO('迭代次数: {}, 本轮最优值: {}, 最优基因代码: {}'.format(_iter, calculate_fitness(best_gene), best_gene))
         # 计算适值函数
         best_gene, total_fitness = find_best_gene(population)
         # 选择
@@ -213,11 +214,12 @@ def main():
         if calculate_fitness(best_gene) > calculate_fitness(best_gene_history):
             best_gene_history = best_gene
 
-    print('迭代次数:{}'.format(_iter))
-    print("计算结果: {}".format(calculate_fitness(best_gene_history)))
-    print("基因片段: {}".format(best_gene_history))
+    LOG_INFO('迭代次数: {}'.format(_iter))
+    LOG_INFO("计算结果: {}".format(calculate_fitness(best_gene_history)))
+    LOG_INFO("基因片段: {}".format(best_gene_history))
 
 
 if __name__ == '__main__':
     train_data, test_data, train_label, test_label = load_mnist_2d('data')
     main()
+    # print_neural_architecture('01011111111100000101001111011011000100010000111')
