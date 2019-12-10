@@ -222,4 +222,4 @@ def main():
 if __name__ == '__main__':
     train_data, test_data, train_label, test_label = load_mnist_2d('data')
     main()
-    # print_neural_architecture('01011111111100000101001111011011000100010000111')
+
