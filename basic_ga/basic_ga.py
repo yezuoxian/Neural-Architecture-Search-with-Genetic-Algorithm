@@ -91,12 +91,16 @@ def mutation(population):
 
 
 def binary_search(search_list, item):
-    """假装是二分查找"""
-    if item <= search_list[0]:
-        return 0
-    for idx in range(len(search_list) - 1):
-        if search_list[idx] < item <= search_list[idx + 1]:
-            return idx + 1
+    """二分查找"""
+    l = 0
+    r = len(search_list) - 1
+    while (l < r):
+        mid = (l + r) >> 1
+        if search_list[mid] >= item:
+            r = mid
+        else:
+            l = mid + 1
+    return l
 
 
 def selection(population, total_fitness):
