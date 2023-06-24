@@ -1,10 +1,10 @@
 import numpy as np
 
-from utils import LOG_INFO, onehot_encoding, calculate_acc
+from basic_mlp.utils import LOG_INFO, onehot_encoding, calculate_acc
 
 
 def data_iterator(x, y, batch_size, shuffle=True):
-    indx = range(len(x))
+    indx = list(range(len(x)))
     if shuffle:
         np.random.shuffle(indx)
 
